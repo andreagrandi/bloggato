@@ -1,0 +1,1 @@
+from bloggato.settings import *
