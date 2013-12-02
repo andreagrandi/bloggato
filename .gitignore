@@ -2,3 +2,8 @@
 *.pot
 *.pyc
 local_settings.py
+autoload
+dbindexer
+django
+djangoappengine
+djangotoolbox
