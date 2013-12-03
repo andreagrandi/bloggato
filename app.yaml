@@ -10,10 +10,6 @@ builtins:
 inbound_services:
 - warmup
 
-libraries:
-- name: django
-  version: latest
-
 handlers:
 - url: /_ah/queue/deferred
   script: djangoappengine.deferred.handler.application
