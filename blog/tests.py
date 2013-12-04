@@ -13,3 +13,16 @@ class BlogTest(TestCase):
         blogpost.text = "Lorem ipsum tarapia tapioco..."
         blogpost.save()
         self.assertTrue(blogpost.id > 0, "BlogPost created correctly")
+
+    def test_post_update(self):
+        blogpost = BlogPost()
+        blogpost.user = self.user
+        blogpost.title = "Title Test"
+        blogpost.text = "Lorem ipsum tarapia tapioco..."
+        blogpost.save()
+        self.assertTrue(blogpost.id > 0, "BlogPost created correctly")
+        blogpost.title = "Title Test - modified"
+        blogpost.save()
+        blogpost_id = blogpost.id
+        blogpost_saved = BlogPost.objects.get(id = blogpost_id)
+        self.assertEquals(blogpost_saved.title, blogpost.title, "BlogPost updated correctly")
