@@ -26,3 +26,14 @@ class BlogTest(TestCase):
         blogpost_id = blogpost.id
         blogpost_saved = BlogPost.objects.get(id = blogpost_id)
         self.assertEquals(blogpost_saved.title, blogpost.title, "BlogPost updated correctly")
+
+    def test_post_delete(self):
+        blogpost = BlogPost()
+        blogpost.user = self.user
+        blogpost.title = "Title Test"
+        blogpost.text = "Lorem ipsum tarapia tapioco..."
+        blogpost.save()
+        blogpost_id = blogpost.id
+        blogpost.delete()
+        blogpost_saved = BlogPost.objects.filter(id = blogpost_id)
+        self.assertEqual(blogpost_saved.count(), 0, "BlogPost deleted correctly")
