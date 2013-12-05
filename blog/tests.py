@@ -66,3 +66,11 @@ class BlogTest(TestCase):
         comment.save()
         comment_saved = Comment.objects.get(id = comment.id)
         self.assertEquals(comment_saved.text, comment.text, "Comment updated correctly")
+
+    def test_comment_delete(self):
+        blogpost = BlogPostFactory().create(True)
+        comment = CommentFactory().create(blogpost, "New comment", True)
+        comment_id = comment.id
+        comment.delete()
+        comment_saved = Comment.objects.filter(id = comment_id)
+        self.assertEqual(comment_saved.count(), 0, "Comment deleted correctly")
