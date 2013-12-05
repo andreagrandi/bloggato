@@ -1,10 +1,10 @@
 from django.test import TestCase
-from .models import BlogPost
+from .models import BlogPost, Comment
 from django.contrib.auth.models import User
 
 class UserFactory(object):
-    def create(self):
-        user = User.objects.create_user(username = "user001", email = "email@domain.com", password = "password123456")
+    def create(self, username="user001", email="email@domain.com", password="password123456"):
+        user = User.objects.create_user(username = username, email = email, password = password)
         return user
 
 class BlogPostFactory(object):
@@ -18,6 +18,18 @@ class BlogPostFactory(object):
             blogpost.save()
 
         return blogpost
+
+class CommentFactory(object):
+    def create(self, blogpost, text="Test comment", save=False):
+        comment = Comment()
+        comment.post = blogpost
+        comment.user = UserFactory().create("user002", "email002@domain.com", "password123456")
+        comment.text = text
+
+        if save==True:
+            comment.save()
+
+        return comment
 
 class BlogTest(TestCase):
     def setUp(self):
