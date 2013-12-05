@@ -54,3 +54,8 @@ class BlogTest(TestCase):
         blogpost.delete()
         blogpost_saved = BlogPost.objects.filter(id = blogpost_id)
         self.assertEqual(blogpost_saved.count(), 0, "BlogPost deleted correctly")
+
+    def test_comment_create(self):
+        blogpost = BlogPostFactory().create(True)
+        comment = CommentFactory().create(blogpost, "New comment", True)
+        self.assertTrue(comment.id > 0, "Comment created correctly")
