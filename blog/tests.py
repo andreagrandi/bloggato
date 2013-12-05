@@ -44,8 +44,7 @@ class BlogTest(TestCase):
         self.assertTrue(blogpost.id > 0, "BlogPost created correctly")
         blogpost.title = "Title Test - modified"
         blogpost.save()
-        blogpost_id = blogpost.id
-        blogpost_saved = BlogPost.objects.get(id = blogpost_id)
+        blogpost_saved = BlogPost.objects.get(id = blogpost.id)
         self.assertEquals(blogpost_saved.title, blogpost.title, "BlogPost updated correctly")
 
     def test_post_delete(self):
@@ -59,3 +58,11 @@ class BlogTest(TestCase):
         blogpost = BlogPostFactory().create(True)
         comment = CommentFactory().create(blogpost, "New comment", True)
         self.assertTrue(comment.id > 0, "Comment created correctly")
+
+    def test_comment_update(self):
+        blogpost = BlogPostFactory().create(True)
+        comment = CommentFactory().create(blogpost, "New comment", True)
+        comment.text = "Modified comment"
+        comment.save()
+        comment_saved = Comment.objects.get(id = comment.id)
+        self.assertEquals(comment_saved.text, comment.text, "Comment updated correctly")
