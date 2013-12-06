@@ -1,27 +1,19 @@
 #!/bin/sh
 
-DOWNLOAD_DIR=./src
+mkdir build
 
-# test for git and hg commands
-for cmd in git hg; do
-command -v ${cmd} >/dev/null || { echo "sh: command not found: ${cmd}"; exit 1; }
-done
+pip install --download='./build' --no-install -r requirements.txt
 
-# download all packages to ./src (default)
-pip install --no-install -r requirements.txt
+unzip -q build/django-autoload-*.zip -d build
+unzip -q build/django-dbindexer-*.zip -d build
+unzip -q build/django-nonrel-*.zip -d build
+unzip -q build/djangoappengine-*.zip -d build
+unzip -q build/djangotoolbox-*.zip -d build
 
-cp -r ${DOWNLOAD_DIR}/django-autoload/autoload ./autoload
-cp -r ${DOWNLOAD_DIR}/django-dbindexer/dbindexer ./dbindexer
-cp -r ${DOWNLOAD_DIR}/django-nonrel/django ./django
-cp -r ${DOWNLOAD_DIR}/djangoappengine/djangoappengine ./djangoappengine
-cp -r ${DOWNLOAD_DIR}/djangotoolbox/djangotoolbox ./djangotoolbox
+cp -r build/django-autoload/autoload ./autoload
+cp -r build/django-dbindexer/dbindexer ./dbindexer
+cp -r build/django-nonrel/django ./django
+cp -r build/djangoappengine/djangoappengine ./djangoappengine
+cp -r build/djangotoolbox/djangotoolbox ./djangotoolbox
 
-[ -f ${DOWNLOAD_DIR}/pip-delete-this-directory.txt ] && rm -rf ${DOWNLOAD_DIR}
-
-echo "Now run:
-./manage.py runserver
-
-To launch this app. If you want access to django /admin, run also:
-./manage.py createsuperuser
-
-And then login in <your_app_ip>/admin, probably http://127.0.0.1:8000/admin"
+#rm -rf build/
