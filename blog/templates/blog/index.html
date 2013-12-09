@@ -1,0 +1,9 @@
+{% if latest_blog_posts %}
+    <ul>
+    {% for post in latest_blog_posts %}
+        <li><a href="/blog/{{ post.id }}/">{{ post.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Blost posts are available.</p>
+{% endif %}

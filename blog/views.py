@@ -1,8 +1,11 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .models import BlogPost
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the Bloggato index.")
+    latest_blog_posts = BlogPost.objects.order_by('-date')[:5]
+    context = {'latest_blog_posts': latest_blog_posts}
+    return render(request, 'blog/index.html', context)
 
 @login_required
 def new_post(request):
