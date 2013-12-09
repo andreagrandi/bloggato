@@ -1,9 +1,8 @@
-from django.conf.urls import patterns, url
-from blog import views
+from django.conf.urls import patterns, url, include
 
 handler500 = 'djangotoolbox.errorviews.server_error'
 
 urlpatterns = patterns('',
     ('^_ah/warmup$', 'djangoappengine.views.warmup'),
-    url(r'^$', views.index, name='index')
+    url(r'^blog/', include('blog.urls')),
 )
