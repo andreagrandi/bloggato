@@ -7,8 +7,14 @@ class BlogPost(models.Model):
     text = models.TextField()
     date = models.DateTimeField(auto_now_add = True)
 
+    def __unicode__(self):
+        return self.title
+
 class Comment(models.Model):
     user = models.ForeignKey(User)
     post = models.ForeignKey(BlogPost)
     text = models.TextField()
     date = models.DateTimeField(auto_now_add = True)
+
+    def __unicode__(self):
+        return unicode("%s: %s" % (self.post, self.text[:60]))
