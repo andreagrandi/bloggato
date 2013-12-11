@@ -1,7 +1,12 @@
-from .models import BlogPost
-from django import forms
+from .models import BlogPost, Comment
+from django.forms import ModelForm
 
-class BlogPostForm(forms.ModelForm):
+class BlogPostForm(ModelForm):
     class Meta:
         model = BlogPost
         exclude = ('user',)
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ('post',)
