@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Bloggato{% endblock %}
+{% block menu %}
+        <ul class="nav nav-justified">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+{% if post %}
+    <div class="title">{{ post.title }}</div>
+    <ul>
+        <div class="time">{{ post.date }}</div>
+        <div class="body">{{ post.text|linebreaks }}</div>
+    </ul>
+{% endif %}
+
+{% endblock %}

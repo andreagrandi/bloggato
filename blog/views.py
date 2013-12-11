@@ -32,4 +32,6 @@ def delete_post(request, id):
     pass
 
 def view_post(request, id):
-    pass
+    post = BlogPost.objects.get(id=int(id))
+    context = {'post': post}
+    return render(request, 'blog/post.html', context)
