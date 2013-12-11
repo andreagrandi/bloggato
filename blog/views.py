@@ -1,10 +1,22 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from .models import BlogPost
 
 def index(request):
-    latest_blog_posts = BlogPost.objects.order_by('-date')[:5]
-    context = {'latest_blog_posts': latest_blog_posts}
+    posts = BlogPost.objects.order_by('-date')
+    paginator = Paginator(posts, 2)
+
+    try: page = int(request.GET.get("page", '1'))
+    except ValueError: page = 1
+
+    try:
+        posts = paginator.page(page)
+    except (InvalidPage, EmptyPage):
+        posts = paginator.page(paginator.num_pages)
+
+    context = {'latest_blog_posts': posts}
+
     return render(request, 'blog/index.html', context)
 
 @login_required
