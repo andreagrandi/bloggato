@@ -15,7 +15,7 @@ def index(request):
     except (InvalidPage, EmptyPage):
         posts = paginator.page(paginator.num_pages)
 
-    context = {'latest_blog_posts': posts}
+    context = {'posts': posts}
 
     return render(request, 'blog/index.html', context)
 

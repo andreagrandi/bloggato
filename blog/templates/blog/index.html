@@ -10,13 +10,33 @@
 
 {% block content %}
 <h1>Blog</h1>
-{% if latest_blog_posts %}
+{% if posts %}
     <ul>
-    {% for post in latest_blog_posts %}
+    {% for post in posts %}
         <li><a href="/blog/{{ post.id }}/">{{ post.title }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
     <p>No Blog posts are available.</p>
 {% endif %}
+
+<!-- Next/Prev page links  -->
+        {% if posts.object_list and posts.paginator.num_pages > 1 %}
+        <div class="pagination" style="margin-top: 20px; margin-left: -20px; ">
+            <span class="step-links">
+                {% if posts.has_previous %}
+                    <a href= "?page={{ posts.previous_page_number }}">newer entries &lt;&lt; </a>
+                {% endif %}
+
+                <span class="current">
+                    &nbsp;Page {{ posts.number }} of {{ posts.paginator.num_pages }}
+                </span>
+
+                {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}"> &gt;&gt; older entries</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+
 {% endblock %}
