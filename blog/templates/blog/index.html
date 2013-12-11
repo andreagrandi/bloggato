@@ -1,3 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Bloggato{% endblock %}
+{% block menu %}
+        <ul class="nav nav-justified">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+<h1>Blog</h1>
 {% if latest_blog_posts %}
     <ul>
     {% for post in latest_blog_posts %}
@@ -7,3 +19,4 @@
 {% else %}
     <p>No Blog posts are available.</p>
 {% endif %}
+{% endblock %}
