@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^(?P<id>\d+)/$', views.view_post, name='post-detail'),
     url(r'^(?P<id>\d+)/edit/$', views.modify_post, name='post-modify'),
     url(r'^(?P<id>\d+)/delete/$', views.delete_post, name='post-delete'),
+    url(r'^add_comment/(\d+)/$', views.add_comment, name="add_comment"),
 )

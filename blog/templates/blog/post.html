@@ -18,4 +18,26 @@
     </ul>
 {% endif %}
 
+<!-- Comments  -->
+{% if comments %}
+    <p>Comments:</p>
+{% endif %}
+
+{% for comment in comments %}
+    <div class="comment">
+        <div class="time">{{ comment.date }} | {{ comment.user }}</div>
+        <div class="body">{{ comment.text|linebreaks }}</div>
+    </div>
+{% endfor %}
+
+<div id="addc">Add a comment</div>
+<!-- Comment form  -->
+<form action="{% url 'blog.views.add_comment' post.id %}" method="POST">{% csrf_token %}
+    <div id="cform">
+        Name: {{ form.author }}
+        <p>{{ form.text|linebreaks }}</p>
+    </div>
+    <div id="submit"><input type="submit" value="Submit"></div>
+</form>
+
 {% endblock %}
