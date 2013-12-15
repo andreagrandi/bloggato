@@ -11,7 +11,7 @@ class BlogPost(models.Model):
         return self.title
 
 class Comment(models.Model):
-    user = models.ForeignKey(User)
+    user = models.CharField(max_length=50)
     post = models.ForeignKey(BlogPost)
     text = models.TextField()
     date = models.DateTimeField(auto_now_add = True)
