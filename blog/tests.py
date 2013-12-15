@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import BlogPost, Comment
+from .models import BlogPost, BlogComment
 from django.contrib.auth.models import User
 
 class UserFactory(object):
@@ -21,9 +21,9 @@ class BlogPostFactory(object):
 
 class CommentFactory(object):
     def create(self, blogpost, text="Test comment", save=False):
-        comment = Comment()
+        comment = BlogComment()
         comment.post = blogpost
-        comment.user = UserFactory().create("user002", "email002@domain.com", "password123456")
+        comment.user = "Anonymous"
         comment.text = text
 
         if save==True:
@@ -64,7 +64,7 @@ class BlogTest(TestCase):
         comment = CommentFactory().create(blogpost, "New comment", True)
         comment.text = "Modified comment"
         comment.save()
-        comment_saved = Comment.objects.get(id = comment.id)
+        comment_saved = BlogComment.objects.get(id = comment.id)
         self.assertEquals(comment_saved.text, comment.text, "Comment updated correctly")
 
     def test_comment_delete(self):
@@ -72,5 +72,5 @@ class BlogTest(TestCase):
         comment = CommentFactory().create(blogpost, "New comment", True)
         comment_id = comment.id
         comment.delete()
-        comment_saved = Comment.objects.filter(id = comment_id)
+        comment_saved = BlogComment.objects.filter(id = comment_id)
         self.assertEqual(comment_saved.count(), 0, "Comment deleted correctly")

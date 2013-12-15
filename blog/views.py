@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from .models import BlogPost, Comment
+from .models import BlogPost, BlogComment
 from .forms import CommentForm
 
 def index(request):
@@ -34,7 +34,7 @@ def delete_post(request, id):
 
 def view_post(request, id):
     post = BlogPost.objects.get(id = int(id))
-    comments = Comment.objects.filter(post = post)
+    comments = BlogComment.objects.filter(post = post)
     context = {'post': post, 'comments': comments, 'form': CommentForm()}
     return render(request, 'blog/post.html', context)
 

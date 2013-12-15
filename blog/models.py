@@ -10,7 +10,7 @@ class BlogPost(models.Model):
     def __unicode__(self):
         return self.title
 
-class Comment(models.Model):
+class BlogComment(models.Model):
     user = models.CharField(max_length=50)
     post = models.ForeignKey(BlogPost)
     text = models.TextField()
