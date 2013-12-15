@@ -6,6 +6,14 @@ class BlogPostForm(ModelForm):
         model = BlogPost
         exclude = ('user',)
 
+    def save(self, user, commit=True):
+        post = super(BlogPostForm, self).save(commit=False)
+        post.user = user
+
+        if commit:
+            post.save()
+        return post
+
 class CommentForm(ModelForm):
     class Meta:
         model = BlogComment
