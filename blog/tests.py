@@ -74,3 +74,18 @@ class BlogTest(TestCase):
         comment.delete()
         comment_saved = BlogComment.objects.filter(id = comment_id)
         self.assertEqual(comment_saved.count(), 0, "Comment deleted correctly")
+
+    def test_post_view(self):
+        blogpost = BlogPostFactory().create(True)
+        CommentFactory().create(blogpost, "New comment - 1", True)
+        CommentFactory().create(blogpost, "New comment - 2", True)
+        url = '/blog/%s/' % (str(blogpost.id))
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue('post' in resp.context)
+        self.assertTrue('comments' in resp.context)
+        self.assertTrue('form' in resp.context)
+        self.assertEqual(resp.context['post'].title, 'Title Test')
+        self.assertEqual(resp.context['post'].text, 'Lorem ipsum tarapia tapioco...')
+        self.assertEqual(resp.context['post'].user.username, 'user001')
+        self.assertEqual(resp.context['comments'].count(), 2)
