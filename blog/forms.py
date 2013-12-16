@@ -18,3 +18,12 @@ class CommentForm(ModelForm):
     class Meta:
         model = BlogComment
         exclude = ('post', 'user',)
+
+    def save(self, user, post, commit=True):
+        comment = super(CommentForm, self).save(commit=False)
+        comment.user = user
+        comment.post = post
+
+        if commit:
+            comment.save()
+        return comment
