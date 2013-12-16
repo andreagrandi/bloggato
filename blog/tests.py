@@ -89,3 +89,10 @@ class BlogTest(TestCase):
         self.assertEqual(resp.context['post'].text, 'Lorem ipsum tarapia tapioco...')
         self.assertEqual(resp.context['post'].user.username, 'user001')
         self.assertEqual(resp.context['comments'].count(), 2)
+
+    def test_new_post_get_view(self):
+        UserFactory().create()
+        self.client.login(username='user001', password='password123456')
+        resp = self.client.get('/blog/new/')
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue('form' in resp.context)
