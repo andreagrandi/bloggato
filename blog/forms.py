@@ -17,4 +17,4 @@ class BlogPostForm(ModelForm):
 class CommentForm(ModelForm):
     class Meta:
         model = BlogComment
-        exclude = ('post', 'user', 'date',)
+        exclude = ('post', 'user',)
