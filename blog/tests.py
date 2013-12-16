@@ -1,5 +1,6 @@
 from django.test import TestCase
 from .models import BlogPost, BlogComment
+from .forms import BlogPostForm, CommentForm
 from django.contrib.auth.models import User
 
 class UserFactory(object):
@@ -127,3 +128,15 @@ class BlogTest(TestCase):
         self.assertEqual(comment.text, 'BlogPost comment')
         self.assertEqual(comment.user, 'Anonymous')
         self.assertEqual(comment.post.id, blogpost.id)
+
+    def test_blogpost_form(self):
+        user = UserFactory().create()
+        blogpost_form = BlogPostForm({'title': 'Title 001', 'text': 'Blog content example'})
+        blogpost_form.save(user, True)
+        self.assertEqual(BlogPost.objects.count(), 1)
+
+    def test_comment_form(self):
+        post = BlogPostFactory().create(True)
+        comment_form = CommentForm({'text': 'Comment from form'})
+        comment_form.save(post.user, post, True)
+        self.assertEqual(BlogComment.objects.count(), 1)
