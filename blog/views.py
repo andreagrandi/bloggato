@@ -21,7 +21,7 @@ def index(request):
 
     return render(request, 'blog/index.html', context)
 
-#@login_required
+@login_required
 def new_post(request):
     if request.method == 'POST':
                 form = BlogPostForm(request.POST)
