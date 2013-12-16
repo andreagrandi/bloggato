@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from django.http import HttpResponseRedirect
 from .models import BlogPost, BlogComment
-from .forms import CommentForm
+from .forms import CommentForm, BlogPostForm
 
 def index(request):
     posts = BlogPost.objects.order_by('-date')
@@ -22,7 +23,15 @@ def index(request):
 
 @login_required
 def new_post(request):
-    pass
+    if request.method == 'POST':
+                form = BlogPostForm(request.POST)
+                if form.is_valid():
+                        post = form.save(user = request.user)
+                        return HttpResponseRedirect('/blog/%d/' % post.id)
+
+    form = BlogPostForm()
+    context = {'form': form}
+    return render(request, 'blog/new_post.html', context)
 
 @login_required
 def modify_post(request, id):
