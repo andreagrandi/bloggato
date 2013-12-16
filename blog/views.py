@@ -24,10 +24,10 @@ def index(request):
 @login_required
 def new_post(request):
     if request.method == 'POST':
-                form = BlogPostForm(request.POST)
-                if form.is_valid():
-                        post = form.save(user = request.user)
-                        return HttpResponseRedirect('/blog/%d/' % post.id)
+        form = BlogPostForm(request.POST)
+        if form.is_valid():
+            post = form.save(user = request.user)
+            return HttpResponseRedirect('/blog/%d/' % post.id)
 
     form = BlogPostForm()
     context = {'form': form}
@@ -48,4 +48,16 @@ def view_post(request, id):
     return render(request, 'blog/post.html', context)
 
 def add_comment(request, id):
-    pass
+    form = CommentForm(request.POST)
+    
+    if form.is_valid():
+        post = BlogPost.objects.get(id=id)
+
+        if request.user.is_authenticated():
+            user = request.user.username
+        else:
+            user = "Anonymous"
+
+        form.save(user = user, post = post)
+
+        return HttpResponseRedirect('/blog/%d/' % post.id)
