@@ -96,3 +96,12 @@ class BlogTest(TestCase):
         resp = self.client.get('/blog/new/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('form' in resp.context)
+
+    def test_new_post_post_view(self):
+        UserFactory().create()
+        self.client.login(username='user001', password='password123456')
+        self.client.post('/blog/new/', {'title': 'Title 001', 'text': 'Blog content example'})
+        post = BlogPost.objects.all()[0]
+        self.assertEqual(BlogPost.objects.count(), 1)
+        self.assertEqual(post.title, 'Title 001')
+        self.assertEqual(post.text, 'Blog content example')
