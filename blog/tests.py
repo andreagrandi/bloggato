@@ -105,3 +105,25 @@ class BlogTest(TestCase):
         self.assertEqual(BlogPost.objects.count(), 1)
         self.assertEqual(post.title, 'Title 001')
         self.assertEqual(post.text, 'Blog content example')
+
+    def test_add_comment_authenticated_view(self):
+        blogpost = BlogPostFactory().create(True)
+        UserFactory().create(username='user002')
+        self.client.login(username='user002', password='password123456')
+        url = '/blog/add_comment/%s/' % (str(blogpost.id))
+        self.client.post(url, {'text': 'BlogPost comment'})
+        comment = BlogComment.objects.all()[0]
+        self.assertEqual(BlogComment.objects.count(), 1)
+        self.assertEqual(comment.text, 'BlogPost comment')
+        self.assertEqual(comment.user, 'user002')
+        self.assertEqual(comment.post.id, blogpost.id)
+
+    def test_add_comment_anonymous_view(self):
+        blogpost = BlogPostFactory().create(True)
+        url = '/blog/add_comment/%s/' % (str(blogpost.id))
+        self.client.post(url, {'text': 'BlogPost comment'})
+        comment = BlogComment.objects.all()[0]
+        self.assertEqual(BlogComment.objects.count(), 1)
+        self.assertEqual(comment.text, 'BlogPost comment')
+        self.assertEqual(comment.user, 'Anonymous')
+        self.assertEqual(comment.post.id, blogpost.id)
