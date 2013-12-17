@@ -44,16 +44,20 @@ def delete_post(request, id):
     except BlogPost.DoesNotExist:
         context = {'message': 'Error: Post does not exist!'}
         return render(request, 'blog/post_deleted.html', context)
-    
-    comments = BlogComment.objects.filter(post=id)
-    
-    for c in comments:
-        c.delete()
 
-    post.delete()
+    if request.user == post.user or request.user.is_superuser:
+        comments = BlogComment.objects.filter(post=id)
+        
+        for c in comments:
+            c.delete()
 
-    context = {'message': 'Post deleted correctly.'}
-    return render(request, 'blog/post_deleted.html', context)
+        post.delete()
+
+        context = {'message': 'Post deleted correctly.'}
+        return render(request, 'blog/post_deleted.html', context)
+    else:
+        context = {'message': 'Error: you cannot delete this post!'}
+        return render(request, 'blog/post_deleted.html', context)
 
 def view_post(request, id):
     post = BlogPost.objects.get(id = int(id))
