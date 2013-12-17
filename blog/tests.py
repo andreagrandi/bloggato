@@ -160,3 +160,16 @@ class BlogTest(TestCase):
         resp = self.client.get(url)
         self.assertTrue('message' in resp.context)
         self.assertEqual(resp.context['message'], 'Error: Post does not exist!')
+
+    def test_post_delete_view_no_premission(self):
+        blogpost = BlogPostFactory().create(True)
+        CommentFactory().create(blogpost, "New comment - 1", True)
+        CommentFactory().create(blogpost, "New comment - 2", True)
+        UserFactory().create(username='user002')
+        self.client.login(username='user002', password='password123456')
+        url = '/blog/%s/delete/' % (str(blogpost.id))
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+        self.assertTrue('message' in resp.context)
+        self.assertEqual(resp.context['message'], 'Error: you cannot delete this post!')
+        self.assertEqual(BlogPost.objects.count(), 1)
