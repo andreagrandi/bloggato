@@ -44,7 +44,7 @@ def modify_post(request, id):
     if request.POST:
         form = BlogPostForm(request.POST, instance=post)
         if form.is_valid():
-            form.save()
+            form.save(user = request.user)
             comments = BlogComment.objects.filter(post = post)
             context = {'post': post, 'comments': comments, 'form': CommentForm()}
             return render(request, 'blog/post.html', context)
