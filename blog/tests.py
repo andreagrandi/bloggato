@@ -199,3 +199,4 @@ class BlogTest(TestCase):
         self.client.post(url, data)
         post = BlogPost.objects.all()[0]
         self.assertEqual(post.text, 'New blog text')
+        self.assertEqual(post.title, 'Title Test')
