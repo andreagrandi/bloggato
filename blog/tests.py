@@ -173,3 +173,19 @@ class BlogTest(TestCase):
         self.assertTrue('message' in resp.context)
         self.assertEqual(resp.context['message'], 'Error: you cannot delete this post!')
         self.assertEqual(BlogPost.objects.count(), 1)
+
+    def test_post_modify_get_view(self):
+        blogpost = BlogPostFactory().create(True)
+        CommentFactory().create(blogpost, "New comment - 1", True)
+        CommentFactory().create(blogpost, "New comment - 2", True)
+        self.client.login(username='user001', password='password123456') # User is implicitly created by BlogPostFactory
+        url = '/blog/%s/edit/' % (str(blogpost.id))
+        resp = self.client.get(url)
+        self.assertTrue('form' in resp.context)
+        data = resp.context['form'].initial
+        self.assertEqual(data['title'], 'Title Test')
+        self.assertEqual(data['text'], 'Lorem ipsum tarapia tapioco...')
+
+    def test_post_modify_post_view(self):
+        pass
+
