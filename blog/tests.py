@@ -187,5 +187,15 @@ class BlogTest(TestCase):
         self.assertEqual(data['text'], 'Lorem ipsum tarapia tapioco...')
 
     def test_post_modify_post_view(self):
-        pass
-
+        blogpost = BlogPostFactory().create(True)
+        CommentFactory().create(blogpost, "New comment - 1", True)
+        CommentFactory().create(blogpost, "New comment - 2", True)
+        self.client.login(username='user001', password='password123456') # User is implicitly created by BlogPostFactory
+        url = '/blog/%s/edit/' % (str(blogpost.id))
+        resp = self.client.get(url)
+        self.assertTrue('form' in resp.context)
+        data = resp.context['form'].initial
+        data['text'] = 'New blog text'
+        self.client.post(url, data)
+        post = BlogPost.objects.all()[0]
+        self.assertEqual(post.text, 'New blog text')
