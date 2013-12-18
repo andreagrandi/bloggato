@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from .models import BlogPost, BlogComment
 from .forms import CommentForm, BlogPostForm
 
@@ -35,7 +36,22 @@ def new_post(request):
 
 @login_required
 def modify_post(request, id):
-    pass
+    if id:
+        post = get_object_or_404(BlogPost, pk=id)
+        if post.user != request.user:
+            return HttpResponseForbidden()
+
+    if request.POST:
+        form = BlogPostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            comments = BlogComment.objects.filter(post = post)
+            context = {'post': post, 'comments': comments, 'form': CommentForm()}
+            return render(request, 'blog/post.html', context)
+    else:
+        form = BlogPostForm(instance=post)
+        context = {'form': form}
+        return render(request, 'blog/new_post.html', context)
 
 @login_required
 def delete_post(request, id):
