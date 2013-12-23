@@ -50,8 +50,8 @@ def modify_post(request, id):
             return render(request, 'blog/post.html', context)
     else:
         form = BlogPostForm(instance=post)
-        context = {'form': form}
-        return render(request, 'blog/new_post.html', context)
+        context = {'form': form, 'post': post}
+        return render(request, 'blog/modify_post.html', context)
 
 @login_required
 def delete_post(request, id):
