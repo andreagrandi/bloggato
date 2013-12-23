@@ -200,3 +200,5 @@ class BlogTest(TestCase):
         post = BlogPost.objects.all()[0]
         self.assertEqual(post.text, 'New blog text')
         self.assertEqual(post.title, 'Title Test')
+        self.assertEqual(BlogPost.objects.count(), 1)
+
