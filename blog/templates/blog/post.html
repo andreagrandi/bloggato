@@ -13,18 +13,7 @@
     </ul>
 {% endif %}
 
-<!-- Comments  -->
-{% if comments %}
-    <p>Comments:</p>
-    
-    {% for comment in comments %}
-        <div class="comment">
-            <div class="time">{{ comment.date }} | {{ comment.user }}</div>
-            <div class="body">{{ comment.text|linebreaks }}</div>
-        </div>
-    {% endfor %}
-{% endif %}
-
+<!-- Comment form -->
 <div class="well">
     <h4>Leave a Comment:</h4>
     <form role="form" action="{% url 'blog.views.add_comment' post.id %}" method="POST">
@@ -35,5 +24,13 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+
+<!-- Comments  -->
+{% if comments %} 
+    {% for comment in comments %}
+        <h3>{{ comment.user }} - <small><span class="glyphicon glyphicon-time"></span> {{ comment.date }}</small></h3>
+        <p>{{ comment.text }}</p>
+    {% endfor %}
+{% endif %}
 
 {% endblock %}
