@@ -95,3 +95,7 @@ def add_comment(request, id):
         form.save(user = user, post = post)
 
         return HttpResponseRedirect('/blog/%d/' % post.id)
+
+def about(request):
+    return render(request, 'blog/about.html')
+
