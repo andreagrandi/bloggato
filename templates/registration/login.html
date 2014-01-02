@@ -3,13 +3,14 @@
 
 {% block content %}
 
+<br>
+<br>
+
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+	<div class="alert alert-danger">
+		Your username and password didn't match. Please try again.
+	</div>
 {% endif %}
-
-
-<br>
-<br>
 
 <!-- Login form -->
 <div class="well">
