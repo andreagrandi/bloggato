@@ -16,23 +16,24 @@
 <!-- Comments  -->
 {% if comments %}
     <p>Comments:</p>
+    
+    {% for comment in comments %}
+        <div class="comment">
+            <div class="time">{{ comment.date }} | {{ comment.user }}</div>
+            <div class="body">{{ comment.text|linebreaks }}</div>
+        </div>
+    {% endfor %}
 {% endif %}
 
-{% for comment in comments %}
-    <div class="comment">
-        <div class="time">{{ comment.date }} | {{ comment.user }}</div>
-        <div class="body">{{ comment.text|linebreaks }}</div>
-    </div>
-{% endfor %}
-
-<div id="addc">Add a comment</div>
-<!-- Comment form  -->
-<form action="{% url 'blog.views.add_comment' post.id %}" method="POST">{% csrf_token %}
-    <div id="cform">
-        Name: {{ form.author }}
-        <p>{{ form.text|linebreaks }}</p>
-    </div>
-    <div id="submit"><input type="submit" value="Submit"></div>
-</form>
+<div class="well">
+    <h4>Leave a Comment:</h4>
+    <form role="form" action="{% url 'blog.views.add_comment' post.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <textarea class="form-control" rows="3" id="id_text" name="text"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 
 {% endblock %}
