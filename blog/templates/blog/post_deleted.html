@@ -1,18 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Bloggato{% endblock %}
-{% block menu %}
-        <ul class="nav nav-justified">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
-    </ul>
-{% endblock %}
+{% block title %}Bloggato - Post deleted{% endblock %}
 
 {% block content %}
 
-{% if post %}
-    
+<br>
+<br>
 
+{% if success %}
+    {% if success == 'true' %}
+    	<div class="alert alert-success">
+    		Post deleted. <a href="/blog" class="alert-link">Click here to go back to the home page.</a>
+		</div>
+    {% else %}
+    	<div class="alert alert-danger">
+    		{{ message }}. <a href="/blog" class="alert-link">Click here to go back to the home page.</a>
+		</div>
+    {% endif %}
 {% endif %}
 
 {% endblock %}
