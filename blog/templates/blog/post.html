@@ -12,12 +12,8 @@
         <p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.date }}</p>
         {% if user.is_authenticated %}
             <p>
-                <a href="/blog/{{ post.id }}/edit">
-                    <button type="button" class="btn btn-primary btn-xs">Edit</button>
-                </a>
-                <a href="/blog/{{ post.id }}/delete">
-                    <button type="button" class="btn btn-primary btn-xs">Delete</button>
-                </a>
+                <a href="/blog/{{ post.id }}/edit" class="btn btn-primary btn-xs">Edit</a>
+                <a href="/blog/{{ post.id }}/delete" class="btn btn-primary btn-xs">Delete</a>
             </p>
         {% endif %}
     </ul>
