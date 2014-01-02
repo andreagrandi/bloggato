@@ -10,6 +10,16 @@
     <ul>
         <div class="body">{{ post.text|linebreaks }}</div>
         <p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.date }}</p>
+        {% if user.is_authenticated %}
+            <p>
+                <a href="/blog/{{ post.id }}/edit">
+                    <button type="button" class="btn btn-primary btn-xs">Edit</button>
+                </a>
+                <a href="/blog/{{ post.id }}/delete">
+                    <button type="button" class="btn btn-primary btn-xs">Delete</button>
+                </a>
+            </p>
+        {% endif %}
     </ul>
 {% endif %}
 
