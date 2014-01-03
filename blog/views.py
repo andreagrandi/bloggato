@@ -39,7 +39,8 @@ def modify_post(request, id):
     if id:
         post = get_object_or_404(BlogPost, pk=id)
         if post.user != request.user:
-            return HttpResponseForbidden()
+            context = {'message': 'You are not allowed to modify this post.'}
+            return render(request, 'error.html', context)
 
     if request.POST:
         form = BlogPostForm(request.POST, instance=post)
