@@ -11,6 +11,7 @@
         <div class="body">{{ post.text|linebreaks }}</div>
         <p><span class="glyphicon glyphicon-time"></span> Posted on {{ post.date }}</p>
         {% if user.is_authenticated %}
+            {% if user == post.user %}
             <p>
                 <a href="/blog/{{ post.id }}/edit" class="btn btn-primary btn-xs">Edit</a>
                 <a href="#" class="btn btn-primary btn-xs" id="deleteButton" data-toggle="modal" data-target="#deletePostModal">Delete</a>
@@ -33,6 +34,7 @@
                   </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
             </p>
+            {% endif %}
         {% endif %}
     </ul>
 {% endif %}
