@@ -6,6 +6,12 @@
 <br>
 <br>
 
+<h1>About Bloggato</h1>
 
+<p>Bloggato (which name derives from an italian term that means "written on a blog") is a very simple blog written using <strong>Python/Django</strong> and hosted on <strong><a href="https://developers.google.com/appengine/">Google App Engine</a></strong>. In particular <strong><a href="https://github.com/django-nonrel/django">django-nonrel</a></strong> fork has been used, because GAE doesn't support relational databases. In the html templates <strong><a href="http://getbootstrap.com">Bootstrap</a></strong> has been used to make the UI nicer and ready to be viewed on a mobile device.</p>
+
+<p>Features are very simple and basic: it's possible to insert a new post specifying title and content (you need to have an account already created) and users (logged in or anonymous ones) can leave a comment on each post. Only the author of a post can delete it and when an anonymous user tries to perform an action reserved to registered users, he/she is automatically redirected to the login page.</p>
+
+<p>Bloggato is released under the <strong>MIT</strong> license and all the source code is available at <a href="https://github.com/andreagrandi/bloggato">https://github.com/andreagrandi/bloggato</a></p>
 
 {% endblock %}
