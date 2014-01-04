@@ -14,7 +14,7 @@
 
 <!-- Login form -->
 <div class="well">
-    <form role="form" action="{% url 'django.contrib.auth.views.login' %}" method="POST">
+    <form role="form" action="{% url 'django.contrib.auth.views.login' %}" method="POST" class="form-signin">
         {% csrf_token %}
         <div class="form-group">
 			<label for="id_username">Username</label>
